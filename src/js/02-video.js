@@ -1,18 +1,25 @@
 import Player from '@vimeo/player';
+import throttle from 'lodash.throttle';
 
 const iframe = document.querySelector('#vimeo-player');
 const player = new Player(iframe);
 
-let playTimeStart = JSON.parse(localStorage.getItem("playTime")) || 0;
+let playTimeStart = JSON.parse(localStorage.getItem("videoplayer-current-time")) || 0;
 
-player.on('play', function() {
-    player.getCurrentTime().then(function(seconds) {  // вказує поточний час відео
+ player.on('timeupdate', throttle(() => {
+        player.getCurrentTime().then(function(seconds) {  // вказує поточний час відео
+            
         console.log(seconds)
-        localStorage.setItem("playTime", JSON.stringify(seconds));
-    }).catch(function(error) {
-        // an error occurred
-    });   
-});
+
+        localStorage.setItem("videoplayer-current-time", JSON.stringify(seconds));
+        })
+
+        .catch(function(error) {
+            // an error occurred
+        });
+    }, 2000)); 
+
+
 
 player.setCurrentTime(playTimeStart).then(function(seconds) {   // запускає плеєр з вказаного часу
     // seconds = the actual time that the player seeked to
