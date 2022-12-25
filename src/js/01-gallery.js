@@ -13,7 +13,7 @@ const imgGallery = document.querySelector('.gallery');
 const imgsMarcup = createImageItems(galleryItems);
 
 imgGallery.insertAdjacentHTML('beforeend', imgsMarcup);
-imgGallery.addEventListener('click', onImgGalleryClick);
+
 
 function createImageItems(gallery) {
     return gallery
@@ -24,15 +24,6 @@ function createImageItems(gallery) {
           </a>`
         }).join('');
 };
-
-
-function onImgGalleryClick(evt) {
-  evt.preventDefault();
-
-  if(!evt.target.classList.contains('gallery__image')) {
-      return;
-    }
-  };
   
   let gallery = new SimpleLightbox('.gallery a', {
     captionsData: 'alt',

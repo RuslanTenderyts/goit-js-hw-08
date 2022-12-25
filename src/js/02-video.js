@@ -4,14 +4,14 @@ import throttle from 'lodash.throttle';
 const iframe = document.querySelector('#vimeo-player');
 const player = new Player(iframe);
 
-let playTimeStart = JSON.parse(localStorage.getItem("videoplayer-current-time")) || 0;
+let playTimeStart = localStorage.getItem("videoplayer-current-time") || 0;
 
  player.on('timeupdate', throttle(() => {
         player.getCurrentTime().then(function(seconds) {  // вказує поточний час відео
             
         console.log(seconds)
 
-        localStorage.setItem("videoplayer-current-time", JSON.stringify(seconds));
+        localStorage.setItem("videoplayer-current-time", seconds);
         })
 
         .catch(function(error) {
